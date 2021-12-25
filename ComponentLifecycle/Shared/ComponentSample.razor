@@ -1,0 +1,15 @@
+﻿@using ComponentLifecycle.TransferServices
+@inject DemonstrationTransferService DemonstrationTransferService
+@implements IDisposable
+
+<h3>Sample Component</h3>
+
+@code {
+    protected override void OnAfterRender(bool firstRender) => DemonstrationTransferService.Logs.Add("OnAfterRender");
+    protected override async Task OnAfterRenderAsync(bool firstRender) => DemonstrationTransferService.Logs.Add("OnAfterRenderAsync");
+    protected override void OnInitialized() => DemonstrationTransferService.Logs.Add("OnInitialized");
+    protected override async Task OnInitializedAsync() => DemonstrationTransferService.Logs.Add("OnInitializedAsync");
+    protected override void OnParametersSet() => DemonstrationTransferService.Logs.Add("OnParametersSet");
+    protected override async Task OnParametersSetAsync() => DemonstrationTransferService.Logs.Add("OnParametersSetAsync");
+    public void Dispose() => DemonstrationTransferService.Logs.Add("Dispose");
+}

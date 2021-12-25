@@ -1,0 +1,29 @@
+﻿@page "/demonstration"
+@using ComponentLifecycle.TransferServices
+@inject DemonstrationTransferService DemonstrationTransferService
+@implements IDisposable
+
+<div class="row">
+    <div class="col">
+        <button class="btn btn-primary" @onclick="() => ShowComponent = !ShowComponent">Toggle Sample Component</button>
+    </div>
+    <div class="col">
+        @if (ShowComponent)
+        {
+            <ComponentSample />
+        }
+    </div>
+</div>
+
+@foreach (string log in DemonstrationTransferService.Logs)
+{
+    <h1><span class="text-danger">@log</span> called</h1>
+}
+
+
+@code {
+    protected override void OnInitialized() => DemonstrationTransferService.Logs.CollectionChanged += RefreshPage;
+    public void Dispose() => DemonstrationTransferService.Logs.CollectionChanged -= RefreshPage;
+    private void RefreshPage(object? sender, EventArgs args) => InvokeAsync(StateHasChanged);
+    public bool ShowComponent { get; set; }
+}
